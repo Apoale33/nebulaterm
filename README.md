@@ -4,7 +4,7 @@
 
 ### A free, modern, local terminal for network engineers — SSH, Serial and Telnet in one clean window.
 
-**A genuinely free [PuTTY](https://www.putty.org/) alternative** that treats the serial console as a first‑class citizen. No cloud. No account. No subscription. Your sessions never leave your machine.
+**The free, local terminal that does SSH, serial and Telnet properly in one window** — with the serial console as a first‑class citizen. No cloud. No account. No subscription. Your sessions never leave your machine.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-1f6feb.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-555)
@@ -20,16 +20,14 @@
 
 ## Why NebulaTerm?
 
-If you configure switches, routers and firewalls, your daily terminal probably looks dated. Here's the gap NebulaTerm fills:
+If you configure switches, routers and firewalls, the free terminal you reach for is probably dated, the powerful one costs money for professional use, and the modern one pushes your sessions to the cloud. NebulaTerm is the missing piece:
 
-| Tool | The catch |
-| --- | --- |
-| **PuTTY** | Free, but dated UI, no tabs, weak session manager. |
-| **Tera Term** | Windows‑only and showing its age. |
-| **MobaXterm** | Powerful, but **paid** for professional use and heavy. |
-| **Termius** | Modern, but **cloud‑based** and **subscription**. |
+- **Free and open‑source** (MIT) — no licence, no account, no subscription.
+- **Local and private** — nothing ever leaves your machine, and credentials are encrypted on disk.
+- **Modern** — tabs, light/dark themes, in‑terminal search, a real session manager.
+- **SSH _and_ serial _and_ Telnet** done properly in the *same* app, with the serial console as a first‑class citizen.
 
-NebulaTerm is the missing piece: **free, local, modern, open‑source**, and it does **SSH _and_ serial _and_ Telnet properly in the same app**, with sessions organized in folders. That's it. That's the whole pitch — and it's what network engineers actually want.
+That's the whole pitch — and it's what network engineers actually want.
 
 ## Features
 
@@ -169,6 +167,6 @@ Issues and PRs are welcome — please keep the scope focused on doing SSH + seri
 
 <div align="center"><sub>
 
-**free putty alternative · open source ssh client · serial terminal · com port terminal · telnet client · network engineer terminal · ssh and serial in one · windows terminal for cisco console · local ssh session manager**
+**open source ssh client · serial console software · com port terminal · telnet client · network engineer terminal · ssh and serial in one app · free tftp server · local ssh session manager**
 
 </sub></div>

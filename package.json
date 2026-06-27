@@ -2,7 +2,7 @@
   "name": "nebulaterm",
   "productName": "NebulaTerm",
   "version": "1.0.0",
-  "description": "Free, local, modern SSH + Serial + Telnet terminal client for network engineers. A clean PuTTY alternative with encrypted session management.",
+  "description": "Free, local, modern SSH + Serial + Telnet terminal client for network engineers, with an encrypted session manager.",
   "author": "Stéphane Cardon",
   "license": "MIT",
   "homepage": "https://packetnebula.com",
