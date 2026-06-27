@@ -1,0 +1,72 @@
+{
+  "name": "nebulaterm",
+  "productName": "NebulaTerm",
+  "version": "1.0.0",
+  "description": "Free, local, modern SSH + Serial + Telnet terminal client for network engineers. A clean PuTTY alternative with encrypted session management.",
+  "author": "Stéphane Cardon",
+  "license": "MIT",
+  "homepage": "https://packetnebula.com",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node scripts/test-telnet-live.js && node scripts/test-ssh-live.js && node scripts/test-scan.js && node scripts/test-tools.js",
+    "lab": "node scripts/lab.js",
+    "smoke": "electron src/main/smoke.js",
+    "icons": "powershell -ExecutionPolicy Bypass -File scripts/make-icons.ps1 && node scripts/make-ico.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win --x64",
+    "dist:ia32": "electron-builder --win --ia32",
+    "dist:all": "electron-builder --win --x64 --ia32"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-search": "^0.15.0",
+    "@xterm/addon-web-links": "^0.11.0",
+    "@xterm/xterm": "^5.5.0",
+    "serialport": "^12.0.0",
+    "ssh2": "^1.16.0"
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.packetnebula.nebulaterm",
+    "productName": "NebulaTerm",
+    "copyright": "Copyright © 2026 Stéphane Cardon",
+    "npmRebuild": false,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "!**/*.{md,map,ts}",
+      "!**/{test,tests,__tests__,docs,example,examples}/**"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/serialport/**",
+      "**/node_modules/@serialport/**",
+      "**/node_modules/ssh2/**",
+      "**/node_modules/bindings/**",
+      "**/node_modules/node-gyp-build/**"
+    ],
+    "win": {
+      "target": ["nsis", "portable"],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "NebulaTerm",
+      "artifactName": "NebulaTerm-Setup-${version}-${arch}.${ext}"
+    },
+    "portable": {
+      "artifactName": "NebulaTerm-${version}-${arch}-portable.${ext}"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'" />
+  <title>NebulaTerm</title>
+  <link rel="stylesheet" href="../../node_modules/@xterm/xterm/css/xterm.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ============ SIDEBAR ============ -->
+    <aside id="sidebar">
+      <div class="side-head">
+        <div class="brand">
+          <span class="brand-mark">&gt;_</span>
+          <span class="brand-name">Nebula<b>Term</b></span>
+        </div>
+        <button id="btn-collapse" class="icon-btn" title="Collapse sidebar">&#10094;</button>
+      </div>
+
+      <div class="side-actions">
+        <button id="btn-new" class="btn btn-primary">+ New session</button>
+        <button id="btn-quick" class="btn btn-ghost" title="Connect without saving (Ctrl+Shift+N)">Quick connect</button>
+      </div>
+
+      <div class="side-search">
+        <input id="search" type="text" placeholder="Search sessions…" autocomplete="off" spellcheck="false" />
+      </div>
+
+      <div id="session-list" class="session-list"></div>
+
+      <div class="side-foot">
+        <button id="btn-settings" class="icon-btn" title="Settings (Ctrl+,)">&#9881;</button>
+        <button id="btn-theme" class="icon-btn" title="Toggle light/dark (Ctrl+T)">&#9681;</button>
+        <a id="link-site" class="site-link" href="#" title="Open packetnebula.com">packetnebula.com</a>
+      </div>
+    </aside>
+
+    <!-- ============ WORKBENCH ============ -->
+    <section id="workbench">
+      <div class="wb-head">
+        <div id="tabbar" class="tabbar"></div>
+        <div class="wb-actions">
+          <button id="btn-font-dec" class="wb-btn mini" title="Smaller font (Ctrl+-)">A&#8722;</button>
+          <button id="btn-font-inc" class="wb-btn mini" title="Larger font (Ctrl+=)">A+</button>
+          <span class="wb-div"></span>
+          <button id="btn-commands" class="wb-btn" title="Vendor command cheat-sheet"><span class="wb-ico">&gt;_</span> Commands</button>
+          <button id="btn-scan" class="wb-btn" title="IP scanner">&#9678; Scan</button>
+          <button id="btn-ping" class="wb-btn" title="Multi-ping (live)">&#8644; Ping</button>
+          <button id="btn-tftp" class="wb-btn" title="TFTP server">&#8645; TFTP</button>
+          <button id="btn-subnet" class="wb-btn" title="Subnet calculator">&#9783; Subnet</button>
+          <button id="btn-inject" class="wb-btn" title="Send a config file line-by-line">&#8615; Config</button>
+          <span class="wb-div"></span>
+          <button id="btn-cmd" class="wb-btn mini" title="Open Windows Command Prompt">CMD</button>
+          <button id="btn-ps" class="wb-btn mini" title="Open Windows PowerShell">PS</button>
+        </div>
+      </div>
+
+      <div id="findbar" class="findbar" hidden>
+        <input id="find-input" type="text" placeholder="Find in terminal…" spellcheck="false" />
+        <span id="find-count" class="find-count"></span>
+        <button id="find-prev" class="icon-btn" title="Previous (Shift+Enter)">&#8593;</button>
+        <button id="find-next" class="icon-btn" title="Next (Enter)">&#8595;</button>
+        <button id="find-close" class="icon-btn" title="Close (Esc)">&#10005;</button>
+      </div>
+
+      <div id="stage-row">
+        <div id="stage" class="stage">
+        <!-- Welcome / empty state -->
+        <div id="welcome" class="welcome">
+          <div class="welcome-card">
+            <div class="welcome-mark">&gt;_</div>
+            <h1>NebulaTerm</h1>
+            <p class="welcome-sub">A free, local terminal for network engineers — SSH, Serial and Telnet in one clean window.</p>
+            <div class="welcome-actions">
+              <button class="bigbtn" data-new="ssh">
+                <span class="bigbtn-i">SSH</span>
+                <span class="bigbtn-t">Secure shell<br /><small>password or key</small></span>
+              </button>
+              <button class="bigbtn" data-new="serial">
+                <span class="bigbtn-i">COM</span>
+                <span class="bigbtn-t">Serial console<br /><small>switches &amp; routers</small></span>
+              </button>
+              <button class="bigbtn" data-new="telnet">
+                <span class="bigbtn-i">TN</span>
+                <span class="bigbtn-t">Telnet<br /><small>legacy gear</small></span>
+              </button>
+            </div>
+            <p class="welcome-foot">
+              Sessions are stored locally and encrypted on this machine. Nothing is sent to the cloud.
+              <br />Built by Stéphane Cardon · <a id="welcome-link" href="#">packetnebula.com</a>
+            </p>
+          </div>
+        </div>
+        </div>
+        <div id="dock-resizer" class="dock-resizer" hidden></div>
+        <aside id="dock" class="dock" hidden>
+          <div id="dock-tabs" class="dock-tabs"></div>
+          <div id="dock-body" class="dock-body"></div>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <div id="float-layer"></div>
+  <div id="modal-root"></div>
+
+  <!-- xterm core + addons (UMD), then the app controller -->
+  <script src="../../node_modules/@xterm/xterm/lib/xterm.js"></script>
+  <script src="../../node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+  <script src="../../node_modules/@xterm/addon-web-links/lib/addon-web-links.js"></script>
+  <script src="../../node_modules/@xterm/addon-search/lib/addon-search.js"></script>
+  <script src="commands.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
