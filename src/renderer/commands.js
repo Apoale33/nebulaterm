@@ -44,9 +44,9 @@ window.NEBULA_COMMANDS = {
       groups: [
         { name: 'System & info', cmds: ['display version', 'display device', 'display current-configuration', 'display saved-configuration', 'display diagnostic-information'] },
         { name: 'Interfaces', cmds: ['display interface brief', 'display interface', 'display interface description', 'display counters inbound interface'] },
-        { name: 'L2 / VLAN', cmds: ['display vlan brief', 'display vlan all', 'display mac-address', 'display stp brief', 'display link-aggregation verbose'] },
+        { name: 'L2 / VLAN', cmds: ['display vlan brief', 'display vlan all', 'display mac-address', 'display stp brief', 'display link-aggregation brief'] },
         { name: 'L3 / routing', cmds: ['display ip routing-table', 'display arp', 'display ospf peer', 'display bgp peer'] },
-        { name: 'Neighbors', cmds: ['display lldp neighbor-information verbose', 'display lldp neighbor-information list'] },
+        { name: 'Neighbors', cmds: ['display lldp neighbor-information brief', 'display lldp neighbor-information list'] },
         { name: 'Config & save', cmds: ['system-view', { c: 'save' }, { c: 'reboot', danger: true }, { c: 'reset saved-configuration', danger: true }] },
       ],
     },
