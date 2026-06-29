@@ -16,7 +16,8 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder --win --x64",
     "dist:ia32": "electron-builder --win --ia32",
-    "dist:all": "electron-builder --win --x64 --ia32"
+    "dist:all": "electron-builder --win --x64 --ia32",
+    "dist:win7": "electron-builder --win nsis portable --ia32 -c.electronVersion=22.3.27 -c.nsis.artifactName=NebulaTerm-Setup-${version}-win7-ia32.${ext} -c.portable.artifactName=NebulaTerm-${version}-win7-ia32-portable.${ext}"
   },
   "dependencies": {
     "@xterm/addon-fit": "^0.10.0",
