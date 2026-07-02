@@ -25,6 +25,8 @@ function defaults() {
     confirmOnQuit: true,       // warn before closing the app with live sessions
     highlightInput: true,      // colorize the commands you type (matched via device echo)
     inputColor: '#4d9fff',     // blue
+    autoReconnect: true,       // auto-reconnect a session after an unexpected drop
+    snippets: [],              // user-saved commands, shown in the Commands panel
   };
 }
 

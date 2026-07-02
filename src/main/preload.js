@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('nebula', {
   listSessions: () => ipcRenderer.invoke('sessions:list'),
   saveSession: (s) => ipcRenderer.invoke('sessions:save', s),
   deleteSession: (id) => ipcRenderer.invoke('sessions:delete', id),
+  exportSessions: () => ipcRenderer.invoke('sessions:export'),
+  importSessions: () => ipcRenderer.invoke('sessions:import'),
   cryptoAvailable: () => ipcRenderer.invoke('crypto:available'),
 
   // Serial ports

@@ -92,12 +92,12 @@ function wireScreenshot() {
   ];
   const seed = `
     window.__nebulaDemo.seed([
-      { id:'d1', type:'ssh', name:'core-sw-01', host:'10.0.0.1', port:22, username:'admin', folder:'Datacenter', authMethod:'password', hasPassword:true, legacyAlgos:true, logging:true },
-      { id:'d2', type:'ssh', name:'core-sw-02', host:'10.0.0.2', port:22, username:'admin', folder:'Datacenter', authMethod:'password', hasPassword:true },
-      { id:'d3', type:'ssh', name:'edge-fw-01', host:'10.0.0.254', port:22, username:'netadmin', folder:'Datacenter', authMethod:'key', hasPassword:false },
-      { id:'d4', type:'serial', name:'console-3850', comPort:'COM3', baudRate:9600, folder:'Lab Bench' },
+      { id:'d1', type:'ssh', name:'core-sw-01', host:'10.0.0.1', port:22, username:'admin', folder:'Datacenter', authMethod:'password', hasPassword:true, legacyAlgos:true, logging:true, color:'#18874d' },
+      { id:'d2', type:'ssh', name:'core-sw-02', host:'10.0.0.2', port:22, username:'admin', folder:'Datacenter', authMethod:'password', hasPassword:true, color:'#18874d' },
+      { id:'d3', type:'ssh', name:'edge-fw-01', host:'10.0.0.254', port:22, username:'netadmin', folder:'Datacenter', authMethod:'key', hasPassword:false, color:'#cf3a3a' },
+      { id:'d4', type:'serial', name:'console-3850', comPort:'COM3', baudRate:9600, folder:'Lab Bench', color:'#d1741f' },
       { id:'d5', type:'telnet', name:'old-router', host:'192.168.1.1', port:23, folder:'Lab Bench' },
-      { id:'d6', type:'ssh', name:'home-server', host:'192.168.1.50', port:22, username:'steph', authMethod:'key' }
+      { id:'d6', type:'ssh', name:'home-server', host:'192.168.1.50', port:22, username:'steph', authMethod:'key', color:'#0891b2' }
     ]);
     window.__nebulaDemo.fakeTerm({ name:'core-sw-01', type:'ssh', host:'10.0.0.1', port:22, username:'admin', vendor:'cisco-ios', logging:true, log:'logs/core-sw-01_2026-06-24.log' }, ${JSON.stringify(demoLines)});
   `;
@@ -249,6 +249,9 @@ function buildMenu() {
         { label: 'New Session…', accelerator: 'CmdOrCtrl+N', click: m('new-session') },
         { label: 'Quick Connect…', accelerator: 'CmdOrCtrl+Shift+N', click: m('quick-connect') },
         { type: 'separator' },
+        { label: 'Import sessions…', click: m('import-sessions') },
+        { label: 'Export sessions…', click: m('export-sessions') },
+        { type: 'separator' },
         { label: 'Close Tab', accelerator: 'CmdOrCtrl+W', click: m('close-tab') },
         { type: 'separator' },
         isMac ? { role: 'close' } : { role: 'quit' },
@@ -294,6 +297,30 @@ function registerIpc() {
   ipcMain.handle('sessions:list', () => store.listSessions());
   ipcMain.handle('sessions:save', (_e, s) => store.upsertSession(s));
   ipcMain.handle('sessions:delete', (_e, id) => { store.deleteSession(id); return true; });
+  ipcMain.handle('sessions:export', async () => {
+    const r = await dialog.showSaveDialog(mainWindow, { title: 'Export sessions', defaultPath: 'nebulaterm-sessions.json', filters: [{ name: 'JSON', extensions: ['json'] }] });
+    if (r.canceled) return { canceled: true };
+    try {
+      const list = store.listSessions();
+      fs.writeFileSync(r.filePath, JSON.stringify({ nebulaterm: 'sessions', version: 1, sessions: list }, null, 2), 'utf8');
+      return { ok: true, count: list.length };
+    } catch (e) { return { error: e.message }; }
+  });
+  ipcMain.handle('sessions:import', async () => {
+    const r = await dialog.showOpenDialog(mainWindow, { title: 'Import sessions', properties: ['openFile'], filters: [{ name: 'JSON', extensions: ['json'] }] });
+    if (r.canceled) return { canceled: true };
+    try {
+      const data = JSON.parse(fs.readFileSync(r.filePaths[0], 'utf8'));
+      const list = Array.isArray(data) ? data : (data.sessions || []);
+      let n = 0;
+      for (const s of list) {
+        if (!s || typeof s !== 'object') continue;
+        const { id, hasPassword, hasPassphrase, createdAt, updatedAt, lastUsed, ...rest } = s;
+        store.upsertSession(rest); n++;
+      }
+      return { ok: true, count: n };
+    } catch (e) { return { error: e.message }; }
+  });
   ipcMain.handle('crypto:available', () => store.encryptionAvailable());
 
   ipcMain.handle('serial:list', async () => {

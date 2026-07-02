@@ -22,7 +22,8 @@
   --serial: #0e8f80;
   --telnet: #5a6b7d;
   --term-bg: #ffffff;
-  --shadow: 0 6px 24px rgba(20, 40, 70, 0.14);
+  --shadow: 0 1px 2px rgba(20, 40, 70, 0.06), 0 10px 30px rgba(20, 40, 70, 0.12);
+  --shadow-sm: 0 1px 3px rgba(20, 40, 70, 0.10);
   --radius: 9px;
 }
 
@@ -47,7 +48,8 @@
   --serial: #2dd4bf;
   --telnet: #8597a8;
   --term-bg: #0b0f14;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 34px rgba(0, 0, 0, 0.55);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 * { box-sizing: border-box; }
@@ -135,8 +137,13 @@ input, select { font-family: inherit; }
   padding: 7px 9px; margin: 1px 0;
   border-radius: 7px; cursor: pointer;
   border: 1px solid transparent;
+  transition: background .12s ease, border-color .12s ease, box-shadow .12s ease, transform .05s ease;
 }
-.sess:hover { background: var(--surface); border-color: var(--border); }
+.sess:hover { background: var(--surface); border-color: var(--border); box-shadow: var(--shadow-sm); }
+.sess:active { transform: translateY(1px); }
+.sess.launching { animation: sessPulse .6s ease; }
+@keyframes sessPulse { 0% { background: var(--accent-soft); } 100% { background: transparent; } }
+.sess-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
 .sess .badge { flex: none; }
 .sess-main { flex: 1; min-width: 0; }
 .sess-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -151,6 +158,12 @@ input, select { font-family: inherit; }
 .badge.ssh { background: var(--ssh); }
 .badge.serial { background: var(--serial); }
 .badge.telnet { background: var(--telnet); }
+
+.color-swatches { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; padding: 0; cursor: pointer; transition: transform .08s; }
+.swatch:hover { transform: scale(1.15); }
+.swatch.sel { border-color: var(--text); box-shadow: 0 0 0 2px var(--surface) inset; }
+.swatch.none { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-faint); font-size: 10px; line-height: 1; }
 
 .side-foot {
   display: flex; align-items: center; gap: 8px;
@@ -350,6 +363,15 @@ input, select { font-family: inherit; }
 .wb-div { width: 1px; align-self: center; height: 20px; background: var(--border); margin: 0 2px; }
 .wb-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .wb-btn.active .wb-ico { color: #fff; }
+.wb-btn.broadcasting { background: var(--bad); color: #fff; border-color: var(--bad); animation: bcastPulse 1.4s infinite; }
+@keyframes bcastPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(207,58,58,.5); } 50% { box-shadow: 0 0 0 4px rgba(207,58,58,0); } }
+body.broadcasting .term-wrap.active .term-host { box-shadow: inset 0 0 0 2px var(--bad); }
+body.broadcasting #stage::after {
+  content: '⇉ BROADCAST — your typing goes to ALL connected sessions';
+  position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+  background: var(--bad); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: .3px;
+  padding: 3px 10px; border-radius: 10px; z-index: 40; pointer-events: none; box-shadow: var(--shadow-sm);
+}
 .wb-btn {
   border: 1px solid var(--border); background: var(--surface-2); color: var(--text-dim);
   border-radius: 8px; padding: 7px 11px; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap;
@@ -388,6 +410,8 @@ input, select { font-family: inherit; }
 .cmd .cmd-note { margin-left: auto; font-family: "Segoe UI", sans-serif; font-size: 10px; color: var(--text-faint); }
 .cmd.danger { border-color: rgba(207, 58, 58, 0.5); border-color: color-mix(in srgb, var(--bad) 45%, var(--border)); }
 .cmd-warn { color: var(--bad); font-weight: 800; }
+.cmd-note.snip-x { cursor: pointer; }
+.cmd-note.snip-x:hover { color: var(--bad); }
 
 /* network tools */
 .tool-sec { margin-bottom: 18px; }
