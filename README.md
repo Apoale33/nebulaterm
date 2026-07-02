@@ -40,7 +40,6 @@ That's the whole pitch — and it's what network engineers actually want.
 - 📝 **Automatic session logging** to a file, with optional clean (color‑stripped) output — perfect for capturing a running‑config.
 - 🧵 **Many sessions at once** — open as many SSH / Telnet / serial tabs as you like; they run in parallel and stay alive (SSH and Telnet keepalive).
 - ⇉ **Broadcast typing** — push the same command to **every connected session at once** (bulk config across a stack of switches).
-- 🔁 **Auto-reconnect** — a dropped session reconnects on its own (with a cancellable countdown); great for flaky links and rebooting gear.
 - 🎨 **Colour-tag your sessions** and save your own **command snippets** — recognise devices at a glance and keep your go-to commands one click away.
 - 💾 **Import / export sessions** — back up your session list or move it to another machine (JSON, passwords excluded).
 - 🔁 **Serial port control** — an **Open / Close port** button right in the status bar frees a COM port left stuck by an unplugged adapter or a wild disconnect, without restarting the app.
